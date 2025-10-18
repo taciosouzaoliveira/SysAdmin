@@ -100,3 +100,4 @@ vg...: Comandos para gerenciar VGs (ex: vgs, vgcreate, vgreduce).
 lv...: Comandos para gerenciar LVs (ex: lvs, lvcreate, lvresize).
 
 Caminho do LV: Os LVs são acessíveis através do device mapper em /dev/mapper/<vg_name>-<lv_name> ou do atalho /dev/<vg_name>/<lv_name>.
+

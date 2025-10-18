@@ -1,26 +1,29 @@
-LFCS - Questão 1: Informações do Kernel e Sistema
-Objetivo da Tarefa
-Coletar Dados do Sistema: Usar comandos de linha para extrair informações específicas do sistema operacional.
+Arquivo: 01-kernel-info.md
+Markdown
 
-Redirecionar Saída: Salvar os dados coletados em arquivos de texto nos locais designados.
+# LFCS - Questão 1: Informações do Kernel e Sistema
 
-A tarefa exige as seguintes ações no servidor terminal:
+### Objetivo da Tarefa
 
-Escrever a release do Kernel do Linux no arquivo /opt/course/1/kernel.
+-   **Coletar Dados do Sistema:** Usar comandos de linha para extrair informações específicas do sistema operacional.
+-   **Redirecionar Saída:** Salvar os dados coletados em arquivos de texto nos locais designados.
 
-Escrever o valor atual do parâmetro de rede ip_forward no arquivo /opt/course/1/ip_forward.
+A tarefa exige as seguintes ações no servidor `terminal`:
+1.  Escrever a release do Kernel do Linux no arquivo `/opt/course/1/kernel`.
+2.  Escrever o valor atual do parâmetro de rede `ip_forward` no arquivo `/opt/course/1/ip_forward`.
+3.  Escrever o fuso horário (timezone) do sistema no arquivo `/opt/course/1/timezone`.
 
-Escrever o fuso horário (timezone) do sistema no arquivo /opt/course/1/timezone.
+---
 
-1. Preparando o Ambiente no Lab
+### 1. Preparando o Ambiente no Lab
+
 Para esta tarefa, a única preparação necessária é garantir que o diretório onde as respostas serão salvas exista.
 
-1.1 Criar o Diretório de Destino
-Use o comando mkdir com a flag -p para criar o diretório /opt/course/1, caso ele não exista.
+#### 1.1 Criar o Diretório de Destino
 
-Bash
+Use o comando `mkdir` com a flag `-p` para criar o diretório `/opt/course/1`, caso ele não exista.
 
-# Crie o diretório para a solução
+```bash
 sudo mkdir -p /opt/course/1
 Isso garante que o caminho para salvar os arquivos de solução está pronto.
 
@@ -55,20 +58,26 @@ Bash
 
 # Verifique o conteúdo do arquivo do kernel
 cat /opt/course/1/kernel
-# Saída esperada (exemplo): 5.15.0-69-generic [cite: 36]
+Saída esperada (exemplo):
+
+5.15.0-69-generic
+Bash
 
 # Verifique o conteúdo do arquivo ip_forward
 cat /opt/course/1/ip_forward
-# Saída esperada (exemplo): 1
+Saída esperada (exemplo):
+
+1
+Bash
 
 # Verifique o conteúdo do arquivo de fuso horário
 cat /opt/course/1/timezone
-# Saída esperada (exemplo): UTC
-Conceitos Importantes para a Prova
+Saída esperada (exemplo):
 
+UTC
+Conceitos Importantes para a Prova
 uname -r: Comando específico para imprimir a release (versão) do kernel em execução.
 
 /proc/sys/: Um sistema de arquivos virtual que permite visualizar e alterar parâmetros do kernel em tempo real. O arquivo net/ipv4/ip_forward controla se o encaminhamento de pacotes IP está ativado (1) ou desativado (0).
-
 
 /etc/timezone: Arquivo de configuração de texto simples que contém o nome do fuso horário utilizado pelo sistema.
