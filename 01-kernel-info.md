@@ -20,6 +20,7 @@ Use o comando mkdir com a flag -p para criar o diretório /opt/course/1, caso el
 
 Bash
 
+# Crie o diretório para a solução
 sudo mkdir -p /opt/course/1
 Isso garante que o caminho para salvar os arquivos de solução está pronto.
 
@@ -41,7 +42,7 @@ Bash
 # O 'cat' lê o conteúdo do arquivo que representa o parâmetro do kernel.
 cat /proc/sys/net/ipv4/ip_forward > /opt/course/1/ip_forward
 Parte 3: Coletar o Fuso Horário
-O fuso horário do sistema pode ser encontrado no arquivo /etc/timezone ou obtido com o comando date.
+O fuso horário do sistema pode ser encontrado no arquivo /etc/timezone.
 
 Bash
 
@@ -54,7 +55,7 @@ Bash
 
 # Verifique o conteúdo do arquivo do kernel
 cat /opt/course/1/kernel
-# Saída esperada (exemplo): 5.15.0-69-generic [cite: 226]
+# Saída esperada (exemplo): 5.15.0-69-generic [cite: 36]
 
 # Verifique o conteúdo do arquivo ip_forward
 cat /opt/course/1/ip_forward
@@ -62,10 +63,12 @@ cat /opt/course/1/ip_forward
 
 # Verifique o conteúdo do arquivo de fuso horário
 cat /opt/course/1/timezone
-# Saída esperada (exemplo): UTC [cite: 228]
+# Saída esperada (exemplo): UTC
 Conceitos Importantes para a Prova
+
 uname -r: Comando específico para imprimir a release (versão) do kernel em execução.
 
 /proc/sys/: Um sistema de arquivos virtual que permite visualizar e alterar parâmetros do kernel em tempo real. O arquivo net/ipv4/ip_forward controla se o encaminhamento de pacotes IP está ativado (1) ou desativado (0).
+
 
 /etc/timezone: Arquivo de configuração de texto simples que contém o nome do fuso horário utilizado pelo sistema.
