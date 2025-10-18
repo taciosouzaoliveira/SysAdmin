@@ -1,14 +1,12 @@
-Com certeza! Aqui está a Questão 1 formatada exatamente no padrão detalhado que você solicitou.
-
 LFCS - Questão 1: Informações do Kernel e Sistema
 Objetivo da Tarefa
 Coletar Dados do Sistema: Usar comandos de linha para extrair informações específicas do sistema operacional.
 
 Redirecionar Saída: Salvar os dados coletados em arquivos de texto nos locais designados.
 
-A tarefa exige as seguintes ações:
+A tarefa exige as seguintes ações no servidor terminal:
 
-Escrever a versão do Kernel do Linux no arquivo /opt/course/1/kernel.
+Escrever a release do Kernel do Linux no arquivo /opt/course/1/kernel.
 
 Escrever o valor atual do parâmetro de rede ip_forward no arquivo /opt/course/1/ip_forward.
 
@@ -43,7 +41,7 @@ Bash
 # O 'cat' lê o conteúdo do arquivo que representa o parâmetro do kernel.
 cat /proc/sys/net/ipv4/ip_forward > /opt/course/1/ip_forward
 Parte 3: Coletar o Fuso Horário
-O fuso horário do sistema está definido no arquivo /etc/timezone.
+O fuso horário do sistema pode ser encontrado no arquivo /etc/timezone ou obtido com o comando date.
 
 Bash
 
@@ -66,10 +64,8 @@ cat /opt/course/1/ip_forward
 cat /opt/course/1/timezone
 # Saída esperada (exemplo): UTC [cite: 228]
 Conceitos Importantes para a Prova
-
 uname -r: Comando específico para imprimir a release (versão) do kernel em execução.
 
 /proc/sys/: Um sistema de arquivos virtual que permite visualizar e alterar parâmetros do kernel em tempo real. O arquivo net/ipv4/ip_forward controla se o encaminhamento de pacotes IP está ativado (1) ou desativado (0).
-
 
 /etc/timezone: Arquivo de configuração de texto simples que contém o nome do fuso horário utilizado pelo sistema.
