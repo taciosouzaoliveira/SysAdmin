@@ -4,7 +4,7 @@ Configurar Servidores NTP: Atualizar a configuração do systemd-timesyncd para 
 
 Ajustar Parâmetros: Definir intervalos de consulta e de nova tentativa de conexão.
 
-A tarefa exige as seguintes configurações:
+A tarefa exige as seguintes configurações no servidor terminal:
 
 Definir 0.pool.ntp.org e 1.pool.ntp.org como servidores NTP principais.
 
@@ -13,16 +13,15 @@ Definir ntp.ubuntu.com e 0.debian.pool.ntp.org como servidores NTP de fallback (
 Definir o intervalo máximo de consulta (PollIntervalMaxSec) para 1000 segundos e a tentativa de reconexão (ConnectionRetrySec) para 20 segundos.
 
 1. Preparando o Ambiente no Lab
-Para esta tarefa, não é preciso criar arquivos ou usuários. A preparação consiste em inspecionar o estado atual do serviço de sincronização de tempo para entender o ponto de partida.
+A preparação consiste em inspecionar o estado atual do serviço de sincronização de tempo para entender o ponto de partida.
 
 1.1 Verificar o Status Atual
-Use o comando timedatectl para ver o status do serviço de tempo, incluindo o fuso horário e se o NTP está ativo.
+Use o comando timedatectl para ver o status do serviço de tempo.
 
 Bash
 
 timedatectl
 Isso mostrará se o serviço systemd-timesyncd está ativo e se o relógio do sistema está sincronizado.
-
 
 1.2 Inspecionar a Configuração Existente
 É uma boa prática verificar o arquivo de configuração atual antes de fazer alterações.
@@ -33,13 +32,12 @@ cat /etc/systemd/timesyncd.conf
 2. Resolvendo a Questão: Passo a Passo
 A solução envolve editar o arquivo de configuração e reiniciar o serviço para aplicar as novas diretivas.
 
-Parte 1: Editar o Arquivo de Configuração
-Use um editor de texto com privilégios de sudo para modificar o arquivo de configuração.
+Primeiro, use um editor de texto com privilégios de sudo para modificar o arquivo de configuração.
 
 Bash
 
 sudo nano /etc/systemd/timesyncd.conf
-Dentro do editor, adicione ou edite as linhas na seção [Time] para que correspondam ao que foi solicitado. Muitas vezes, as linhas já existem e estão comentadas (com #); basta remover o # e ajustar os valores.
+Dentro do editor, adicione ou modifique as linhas na seção [Time] para que correspondam ao solicitado.
 
 Ini, TOML
 
@@ -48,38 +46,26 @@ NTP=0.pool.ntp.org 1.pool.ntp.org
 FallbackNTP=ntp.ubuntu.com 0.debian.pool.ntp.org
 PollIntervalMaxSec=1000
 ConnectionRetrySec=20
-Salve e feche o arquivo.
-
-Parte 2: Reiniciar o Serviço
-Para que as novas configurações entrem em vigor, o serviço systemd-timesyncd precisa ser reiniciado.
+Depois de salvar e fechar o arquivo, reinicie o serviço systemd-timesyncd para que as novas configurações entrem em vigor.
 
 Bash
 
 sudo systemctl restart systemd-timesyncd
 Verificação Final
-Após reiniciar, verifique o status do serviço para confirmar que ele está funcionando corretamente e sem erros.
+Após reiniciar, verifique o status do serviço para confirmar que ele está funcionando corretamente.
 
 Bash
 
-# Verifique o status detalhado do serviço
 sudo systemctl status systemd-timesyncd
-A saída deve mostrar a linha Active: active (running). Além disso, nos logs de status, você deve ver uma mensagem indicando que a sincronização inicial foi feita com um dos novos servidores configurados, como, por exemplo: Initial synchronization to time server 162.159.200.123:123 (0.pool.ntp.org).
+Saída esperada (exemplo):
 
-
+A saída deve mostrar a linha Active: active (running). Nos logs, você verá uma mensagem indicando a sincronização com um dos novos servidores, como: Initial synchronization to time server 162.159.200.123:123 (0.pool.ntp.org).
 
 Conceitos Importantes para a Prova
 systemd-timesyncd: É o serviço do systemd responsável por sincronizar o relógio do sistema com servidores NTP remotos.
 
-
 /etc/systemd/timesyncd.conf: O arquivo de configuração principal para o systemd-timesyncd.
 
-Diretivas de Configuração:
-
-
-NTP=: Define a lista de servidores NTP principais, separados por espaço.
-
-
-FallbackNTP=: Define uma lista de servidores de reserva, usados caso os principais falhem.
-
+NTP= e FallbackNTP=: Diretivas que definem a lista de servidores NTP principais e de reserva, respectivamente.
 
 systemctl restart <serviço>: O comando padrão para aplicar mudanças na configuração da maioria dos serviços gerenciados pelo systemd.
