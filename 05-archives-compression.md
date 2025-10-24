@@ -1,95 +1,86 @@
-LFCS - Questão 4: Variáveis de Ambiente
-Objetivo da Tarefa
-Manipular Variáveis: Criar um script que defina e utilize variáveis de ambiente.
+# **LFCS - Questão 5: Arquivos Compactados e Compressão**
 
-Entender Escopo: Demonstrar a diferença entre uma variável de shell local e uma variável exportada para processos filhos.
+### **Objetivo da Tarefa**
 
-A tarefa exige a criação de um script em /opt/course/4/script.sh que execute as seguintes ações:
+- **Manipular Arquivos:** Descompactar um arquivo `.tar.bz2` e re-compactá-lo usando um algoritmo de compressão diferente (gzip).
+- **Verificar Integridade:** Garantir que o conteúdo do arquivo original e do novo arquivo seja idêntico.
 
-Defina uma nova variável de ambiente VARIABLE2 com o conteúdo v2, disponível apenas dentro do próprio script.
+A tarefa exige as seguintes ações no servidor `data-001`:
 
-Imprima o conteúdo da variável VARIABLE2.
+1. Usar o arquivo original `/imports/import001.tar.bz2`.
+2. Criar um novo arquivo `/imports/import001.tar.gz` com o mesmo conteúdo, utilizando a melhor compressão gzip possível.
+3. Listar o conteúdo de ambos os arquivos, ordenar a lista e salvá-la em `/imports/import001.tar.bz2_list` e `/imports/import001.tar.gz_list`.
 
-Defina uma nova variável de ambiente VARIABLE3 com o conteúdo ${VARIABLE1}-extended, que deve estar disponível no script e em todos os seus processos filhos.
+---
 
+### **1. Preparando o Ambiente no Lab**
 
-Imprima o conteúdo da variável VARIABLE3.
+### **1.1 Criar o Arquivo de Exemplo**
 
-1. Preparando o Ambiente no Lab
-Para esta tarefa, precisamos criar o diretório e o arquivo de script. Além disso, o cenário assume que uma variável VARIABLE1 já existe, então vamos criá-la e exportá-la no nosso terminal para que o script possa acessá-la.
+bash
 
-1.1 Criar o Diretório e o Arquivo de Script
-Bash
+```
+# Conecte-se ao servidor data-001ssh data-001
 
-# Crie o diretório de destino
-sudo mkdir -p /opt/course/4
+# Crie a estrutura de diretórios e arquivos de exemplosudo mkdir -p /imports/source_files/dir1
+sudo touch /imports/source_files/file1.txt
+sudo touch /imports/source_files/dir1/file2.txt
 
-# Crie o arquivo de script vazio
-sudo touch /opt/course/4/script.sh
+# Crie o arquivo .tar.bz2 inicialsudo tar cjf /imports/import001.tar.bz2 -C /imports/source_files .
 
-# Dê permissão de execução ao script
-sudo chmod +x /opt/course/4/script.sh
-1.2 Simular a Variável Pré-existente
-No seu terminal atual, crie e exporte VARIABLE1 para que ela esteja disponível para o script quando ele for executado.
+# Limpe os arquivos de origemsudo rm -rf /imports/source_files
+```
 
-Bash
+---
 
-# A variável 'VARIABLE1' já está definida no arquivo .bashrc no cenário do simulado 
-# Para simular, exportamos ela manualmente no nosso terminal:
-export VARIABLE1="random-string"
-2. Resolvendo a Questão: Passo a Passo
-A solução consiste em escrever o script com a lógica correta para definir e exportar as variáveis.
+### **2. Resolvendo a Questão: Passo a Passo**
 
-Parte 1: Escrever o Script
-Use um editor de texto com privilégios de sudo para adicionar o conteúdo ao script.
+### **Parte 1: Extrair o Conteúdo Original**
 
-Bash
+bash
 
-sudo nano /opt/course/4/script.sh
-Adicione o seguinte conteúdo ao arquivo:
+```
+sudo mkdir /imports/temp_extract
+sudo tar xjf /imports/import001.tar.bz2 -C /imports/temp_extract
+```
 
-Bash
+### **Parte 2: Criar o Novo Arquivo .tar.gz**
 
-#!/bin/bash
+bash
 
-# 1. Define uma variável local, disponível apenas neste script 
-VARIABLE2="v2"
+```
+sudo tar czf /imports/import001.tar.gz --gzip:best -C /imports/temp_extract .
+```
 
-# 2. Imprime o conteúdo da variável local 
-echo $VARIABLE2
+### **Parte 3: Limpar o Ambiente**
 
-# 3. Define e EXPORTA uma variável, tornando-a disponível para processos filhos 
-export VARIABLE3="${VARIABLE1}-extended"
+bash
 
-# 4. Imprime o conteúdo da variável exportada 
-echo $VARIABLE3
-Salve e feche o arquivo.
+```
+sudo rm -rf /imports/temp_extract
+```
 
-Verificação Final
-Execute o script e, em seguida, verifique se as variáveis criadas estão ou não disponíveis no seu terminal (o "shell pai"), para confirmar o conceito de escopo.
+### **Parte 4: Verificar Integridade**
 
-Bash
+bash
 
-# Execute o script para ver sua saída
-/opt/course/4/script.sh
-Saída esperada do script:
+```
+sudo tar tjf /imports/import001.tar.bz2 | sort > /imports/import001.tar.bz2_list
+sudo tar tzf /imports/import001.tar.gz | sort > /imports/import001.tar.gz_list
+diff /imports/import001.tar.bz2_list /imports/import001.tar.gz_list
+```
 
-v2
-random-string-extended
-Bash
+---
 
-# Agora, tente imprimir as variáveis no seu terminal
-echo $VARIABLE2
-echo $VARIABLE3
+### **Conceitos Importantes para a Prova**
 
-# A saída para ambos os comandos acima deve ser uma linha em branco,
-# pois 'VARIABLE2' era local ao script e 'VARIABLE3' foi exportada apenas
-# para os processos FILHOS do script, não para o processo PAI (seu terminal).
-Conceitos Importantes para a Prova
-Variável Local (NOME="valor"): Existe apenas no processo (shell) onde foi criada. Não é herdada por processos filhos.
-
-
-Variável Exportada (export NOME="valor"): Fica disponível para o processo onde foi criada e para todos os processos filhos que forem iniciados a partir dele.
-
-
-Escopo de Variáveis: O export não afeta o processo "pai" que chamou o script. A herança de variáveis é uma via de mão única: de pai para filho.
+- **`tar`:** Ferramenta para criar e manipular arquivos de arquivamento.
+- **Operações:**
+    - `c`: criar
+    - `x`: extrair
+    - `t`: listar
+    - `f`: arquivo
+- **Filtros de Compressão:**
+    - `z`: gzip
+    - `j`: bzip2
+- **`C <DIRETÓRIO>`:** Muda para o diretório antes de executar a operação.
