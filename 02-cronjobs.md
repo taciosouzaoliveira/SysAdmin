@@ -21,9 +21,9 @@ Para esta tarefa, a preparação envolve simular o cenário inicial, criando o u
 bash
 
 ```
-# Crie o usuário 'asset-manager' com um diretório homesudo useradd -m -s /bin/bash asset-manager
+# Crie o usuário 'asset-manager' com um diretório home sudo useradd -m -s /bin/bash asset-manager
 
-# Mude para o novo usuário para criar os scripts em seu diretóriosudo su - asset-manager
+# Mude para o novo usuário para criar os scripts em seu diretório sudo su - asset-manager
 
 # Crie os scripts de exemploecho '#!/bin/bash' > ~/generate.sh
 echo 'echo "Gerando relatorio em $(date)" >> /tmp/report.log' >> ~/generate.sh
@@ -31,7 +31,7 @@ echo 'echo "Gerando relatorio em $(date)" >> /tmp/report.log' >> ~/generate.sh
 echo '#!/bin/bash' > ~/clean.sh
 echo 'echo "Limpando arquivos em $(date)" >> /tmp/clean.log' >> ~/clean.sh
 
-# Torne os scripts executáveischmod +x ~/generate.sh ~/clean.sh
+# Torne os scripts executáveis chmod +x ~/generate.sh ~/clean.sh
 
 # Volte para seu usuário normalexit
 ```
@@ -65,11 +65,11 @@ A solução é dividida em duas partes: a migração da tarefa existente e a cri
 bash
 
 ```
-# Inspecione o crontab do sistema para ver a linha a ser migradacat /etc/crontab
+# Inspecione o crontab do sistema para ver a linha a ser migrada cat /etc/crontab
 
-# Mude para o usuário asset-manager para editar seu crontab pessoalsudo su - asset-manager
+# Mude para o usuário asset-manager para editar seu crontab pessoal sudo su - asset-manager
 
-# Abra o editor de crontab deste usuáriocrontab -e
+# Abra o editor de crontab deste usuário crontab -e
 ```
 
 No editor, cole a tarefa, mas remova o campo de usuário (`root`), pois crontabs de usuário não possuem essa coluna.
@@ -85,7 +85,7 @@ Salve, saia do editor e, para completar a migração, remova a linha antiga do c
 bash
 
 ```
-# Volte para seu usuário com privilégios sudoexit
+# Volte para seu usuário com privilégios sudo exit
 
 # Edite o arquivo de sistema para apagar a linha originalsudo nano /etc/crontab
 ```
