@@ -23,9 +23,11 @@ bash
 ```
 # Conecte-se ao servidor data-001ssh data-001
 
-# Navegue até o diretório de backupcd /var/backup/backup-015
+# Navegue até o diretório de backup
+cd /var/backup/backup-015
 
-# Crie os subdiretóriossudo mkdir small large compromised
+# Crie os subdiretórios
+sudo mkdir small large compromised
 ```
 
 ### **1.2 Inspecionar o Diretório**

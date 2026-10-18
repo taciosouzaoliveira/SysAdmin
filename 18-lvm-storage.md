@@ -22,11 +22,14 @@ A tarefa exige as seguintes ações de gerenciamento de LVM:
 bash
 
 ```
-# Liste os Physical Volumessudo pvs
+# Liste os Physical Volumes
+sudo pvs
 
-# Liste os Volume Groupssudo vgs
+# Liste os Volume Groups
+sudo vgs
 
-# Liste os Logical Volumessudo lvs
+# Liste os Logical Volumes
+sudo lvs
 ```
 
 ---
@@ -74,11 +77,14 @@ bash
 ```
 # Verifique se /dev/vdh pertence a 'vol2'sudo pvs
 
-# Verifique se os VGs foram configurados corretamentesudo vgs
+# Verifique se os VGs foram configurados corretamente
+sudo vgs
 
-# Verifique se o novo LV existesudo lvs
+# Verifique se o novo LV existe
+sudo lvs
 
-# Verifique o sistema de arquivossudo blkid /dev/vol2/p1
+# Verifique o sistema de arquivos
+sudo blkid /dev/vol2/p1
 ```
 
 ---

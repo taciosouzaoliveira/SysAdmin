@@ -21,7 +21,8 @@ bash
 ```
 # Conecte-se ao servidor web-srv1ssh web-srv1
 
-# Teste o acesso às aplicaçõescurl localhost:1111# Saída: app1curl localhost:2222# Saída: app2curl localhost:2222/special# Saída: app2 special
+# Teste o acesso às aplicações
+curl localhost:1111# Saída: app1curl localhost:2222# Saída: app2curl localhost:2222/special# Saída: app2 special
 ```
 
 ---
@@ -33,7 +34,8 @@ bash
 bash
 
 ```
-# Crie um novo arquivo de configuraçãosudo nano /etc/nginx/sites-available/load-balancer.conf
+# Crie um novo arquivo de configuração
+sudo nano /etc/nginx/sites-available/load-balancer.conf
 ```
 
 Adicione o seguinte conteúdo:
@@ -68,11 +70,14 @@ nginx
 bash
 
 ```
-# Crie link simbólico para sites-enabledsudo ln -s /etc/nginx/sites-available/load-balancer.conf /etc/nginx/sites-enabled/
+# Crie link simbólico para sites-enabled
+sudo ln -s /etc/nginx/sites-available/load-balancer.conf /etc/nginx/sites-enabled/
 
-# Teste a sintaxesudo nginx -t
+# Teste a sintaxe
+sudo nginx -t
 
-# Recarregue o serviçosudo systemctl reload nginx
+# Recarregue o serviço
+sudo systemctl reload nginx
 ```
 
 ---
@@ -82,11 +87,13 @@ bash
 bash
 
 ```
-# Teste o balanceamento (deve alternar entre app1 e app2)curl http://web-srv1:8000
+# Teste o balanceamento (deve alternar entre app1 e app2)
+curl http://web-srv1:8000
 curl http://web-srv1:8000
 curl http://web-srv1:8000
 
-# Teste o redirecionamento (sempre app2 special)curl http://web-srv1:8001
+# Teste o redirecionamento (sempre app2 special)
+curl http://web-srv1:8001
 curl http://web-srv1:8001/qualquer/caminho
 ```
 

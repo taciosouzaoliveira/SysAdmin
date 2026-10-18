@@ -54,11 +54,14 @@ bash
 #!/bin/bash
 # 1. Define uma variável local, disponível apenas neste scriptVARIABLE2="v2"
 
-# 2. Imprime o conteúdo da variável localecho $VARIABLE2
+# 2. Imprime o conteúdo da variável local
+echo $VARIABLE2
 
-# 3. Define e EXPORTA uma variável, tornando-a disponível para processos filhosexport VARIABLE3="${VARIABLE1}-extended"
+# 3. Define e EXPORTA uma variável, tornando-a disponível para processos filhos
+export VARIABLE3="${VARIABLE1}-extended"
 
-# 4. Imprime o conteúdo da variável exportadaecho $VARIABLE3
+# 4. Imprime o conteúdo da variável exportada
+echo $VARIABLE3
 ```
 
 ---

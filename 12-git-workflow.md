@@ -38,9 +38,11 @@ cd /home/candidate/repositories/auto-verifier
 bash
 
 ```
-# Liste todas as branchesgit branch -a
+# Liste todas as branches
+git branch -a
 
-# Verifique cada branchgit checkout dev4
+# Verifique cada branch
+git checkout dev4
 grep "user_registration_level" config.yaml# Saída: closedgit checkout dev5
 grep "user_registration_level" config.yaml# Saída: open → ENCONTRAMOS!git checkout dev6
 grep "user_registration_level" config.yaml# Saída: closed# Volte para main e faça o mergegit checkout main
@@ -72,11 +74,14 @@ git commit -m "added log directory"
 bash
 
 ```
-# Verifique se a alteração do merge está presentegrep "user_registration_level" config.yaml
+# Verifique se a alteração do merge está present
+egrep "user_registration_level" config.yaml
 
-# Verifique o status do gitgit status
+# Verifique o status do git
+git status
 
-# Verifique o histórico de commitsgit log -1
+# Verifique o histórico de commits
+git log -1
 ```
 
 ---

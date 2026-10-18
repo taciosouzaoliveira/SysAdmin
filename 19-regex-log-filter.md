@@ -42,9 +42,11 @@ grep -E "/app/user.*hacker-bot/1.2" nginx.log > nginx.log.extracted
 bash
 
 ```
-# Faça backup primeirocp server.log server.log.bak
+# Faça backup primeiro
+cp server.log server.log.bak
 
-# Substitua as linhas sensíveissed -i 's/^container\.web.*Running.*24h$/SENSITIVE LINE REMOVED/g' server.log
+# Substitua as linhas sensíveis
+sed -i 's/^container\.web.*Running.*24h$/SENSITIVE LINE REMOVED/g' server.log
 ```
 
 ---
@@ -54,7 +56,10 @@ bash
 bash
 
 ```
-# Verifique a extraçãowc -l nginx.log.extracted# Deve ser 27 linhas# Verifique a substituiçãogrep "SENSITIVE LINE REMOVED" server.log | wc -l# Deve ser 44 linhas
+# Verifique a extraçãowc -l nginx.log.extracted
+# Deve ser 27 linhas
+# Verifique a substituição
+grep "SENSITIVE LINE REMOVED" server.log | wc -l# Deve ser 44 linhas
 ```
 
 ---

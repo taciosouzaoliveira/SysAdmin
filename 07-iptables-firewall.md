@@ -21,7 +21,8 @@ A tarefa exige a implementação das seguintes regras de firewall na interface 
 bash
 
 ```
-# De um servidor remoto, teste o acesso às portascurl data-002:5000
+# De um servidor remoto, teste o acesso às portas
+curl data-002:5000
 curl data-002:6001
 curl data-002:6002
 ```
@@ -33,7 +34,8 @@ bash
 ```
 # Conecte-se ao servidor data-002ssh data-002
 
-# Liste as regras atuaissudo iptables -L
+# Liste as regras atuais
+sudo iptables -L
 sudo iptables -t nat -L
 ```
 
@@ -62,9 +64,11 @@ sudo iptables -t nat -A PREROUTING -p tcp --dport 6000 -j REDIRECT --to-port 600
 bash
 
 ```
-# Primeiro permita o IP específicosudo iptables -A INPUT -p tcp --dport 6002 -s 192.168.10.80 -j ACCEPT
+# Primeiro permita o IP específico
+sudo iptables -A INPUT -p tcp --dport 6002 -s 192.168.10.80 -j ACCEPT
 
-# Depois bloqueie todo o restosudo iptables -A INPUT -p tcp --dport 6002 -j DROP
+# Depois bloqueie todo o resto
+sudo iptables -A INPUT -p tcp --dport 6002 -j DROP
 ```
 
 ### **Parte 4: Bloquear Tráfego de Saída**
@@ -82,10 +86,12 @@ sudo iptables -A OUTPUT -d 192.168.10.70 -j DROP
 bash
 
 ```
-# Liste as regras aplicadassudo iptables -L
+# Liste as regras aplicadas
+sudo iptables -L
 sudo iptables -t nat -L
 
-# Teste o acesso às portascurl data-002:5000# Deve falharcurl data-002:6000# Deve retornar conteúdo da porta 6001curl data-002:6002# Deve falhar (exceto do data-001)
+# Teste o acesso às portas
+curl data-002:5000# Deve falharcurl data-002:6000# Deve retornar conteúdo da porta 6001curl data-002:6002# Deve falhar (exceto do data-001)
 ```
 
 ---

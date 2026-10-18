@@ -58,7 +58,8 @@ sudo sshfs -o allow_other,rw app-srv1:/data-export /app-srv1/data-export
 bash
 
 ```
-# Edite o arquivo de exportssudo nano /etc/exports
+# Edite o arquivo de exports
+sudo nano /etc/exports
 ```
 
 Adicione a linha:

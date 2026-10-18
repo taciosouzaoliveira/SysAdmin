@@ -25,7 +25,8 @@ bash
 
 # Mude para o novo usuário para criar os scripts em seu diretório sudo su - asset-manager
 
-# Crie os scripts de exemploecho '#!/bin/bash' > ~/generate.sh
+# Crie os scripts de exemplo
+echo '#!/bin/bash' > ~/generate.sh
 echo 'echo "Gerando relatorio em $(date)" >> /tmp/report.log' >> ~/generate.sh
 
 echo '#!/bin/bash' > ~/clean.sh
@@ -87,7 +88,8 @@ bash
 ```
 # Volte para seu usuário com privilégios sudo exit
 
-# Edite o arquivo de sistema para apagar a linha originalsudo nano /etc/crontab
+# Edite o arquivo de sistema para apagar a linha original
+sudo nano /etc/crontab
 ```
 
 ### **Parte 2: Criar a Nova Tarefa Agendada**
@@ -97,7 +99,8 @@ Adicione a segunda tarefa diretamente no crontab do usuário.
 bash
 
 ```
-# Abra o crontab do usuário novamente (pode ser feito diretamente com sudo)sudo crontab -u asset-manager -e
+# Abra o crontab do usuário novamente (pode ser feito diretamente com sudo)
+sudo crontab -u asset-manager -e
 ```
 
 Adicione a nova linha para a tarefa que roda às 11:15 de segunda-feira (1) e quinta-feira (4).

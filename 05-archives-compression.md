@@ -22,13 +22,16 @@ bash
 ```
 # Conecte-se ao servidor data-001ssh data-001
 
-# Crie a estrutura de diretórios e arquivos de exemplosudo mkdir -p /imports/source_files/dir1
+# Crie a estrutura de diretórios e arquivos de exemplo
+sudo mkdir -p /imports/source_files/dir1
 sudo touch /imports/source_files/file1.txt
 sudo touch /imports/source_files/dir1/file2.txt
 
-# Crie o arquivo .tar.bz2 inicialsudo tar cjf /imports/import001.tar.bz2 -C /imports/source_files .
+# Crie o arquivo .tar.bz2 inicial
+sudo tar cjf /imports/import001.tar.bz2 -C /imports/source_files .
 
-# Limpe os arquivos de origemsudo rm -rf /imports/source_files
+# Limpe os arquivos de origem
+sudo rm -rf /imports/source_files
 ```
 
 ---

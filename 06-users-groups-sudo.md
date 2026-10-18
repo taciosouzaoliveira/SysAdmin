@@ -23,7 +23,8 @@ bash
 ```
 # Conecte-se ao servidor app-srv1ssh app-srv1
 
-# Crie os grupos que serão utilizadossudo groupadd dev
+# Crie os grupos que serão utilizados
+sudo groupadd dev
 sudo groupadd op
 
 # Crie o diretório base para os novos 'homes'sudo mkdir -p /home/accounts
@@ -34,7 +35,8 @@ sudo groupadd op
 bash
 
 ```
-# Crie o usuário 'user1' com uma configuração padrãosudo useradd -m user1
+# Crie o usuário 'user1' com uma configuração padrão
+sudo useradd -m user1
 ```
 
 ### **1.3 Criar o Script para o Teste de Sudo**
@@ -42,10 +44,12 @@ bash
 bash
 
 ```
-# Crie o script de exemploecho '#!/bin/bash' | sudo tee /root/dangerous.sh > /dev/null
+# Crie o script de exemplo
+echo '#!/bin/bash' | sudo tee /root/dangerous.sh > /dev/null
 echo 'echo "Script perigoso executado com sucesso!"' | sudo tee -a /root/dangerous.sh > /dev/null
 
-# Dê permissão de execução ao scriptsudo chmod +x /root/dangerous.sh
+# Dê permissão de execução ao script
+sudo chmod +x /root/dangerous.sh
 ```
 
 ---
@@ -57,7 +61,8 @@ echo 'echo "Script perigoso executado com sucesso!"' | sudo tee -a /root/dangero
 bash
 
 ```
-# -g: muda o grupo primário# -d: muda o diretório homesudo usermod -g dev -d /home/accounts/user1 user1
+# -g: muda o grupo primário# -d: muda o diretório home
+sudo usermod -g dev -d /home/accounts/user1 user1
 ```
 
 ### **Parte 2: Criar o Novo Usuário user2**
@@ -65,7 +70,8 @@ bash
 bash
 
 ```
-# -s: define o shell de login# -m: cria o diretório home# -d: especifica o caminho do diretório home# -G: adiciona o usuário a grupos suplementaressudo useradd -s /bin/bash -m -d /home/accounts/user2 -G dev,op user2
+# -s: define o shell de login# -m: cria o diretório home# -d: especifica o caminho do diretório home# -G: adiciona o usuário a grupos suplementares
+sudo useradd -s /bin/bash -m -d /home/accounts/user2 -G dev,op user2
 ```
 
 ### **Parte 3: Configurar a Permissão Sudo**
@@ -73,7 +79,8 @@ bash
 bash
 
 ```
-# Edite o arquivo sudoers de forma segurasudo visudo
+# Edite o arquivo sudoers de forma segura
+sudo visudo
 ```
 
 Adicione a seguinte linha no final do arquivo:
@@ -97,8 +104,11 @@ bash
 # A saída deve mostrar 'gid=... (dev)'
 
 getent passwd user1 | cut -d: -f6
-# A saída deve ser '/home/accounts/user1'# Verifique as propriedades do user2id user2
-# A saída deve mostrar que pertence aos grupos 'dev' e 'op'# Teste a regra do sudosudo su - user2
+# A saída deve ser '/home/accounts/user1'
+# Verifique as propriedades do user2id user2
+# A saída deve mostrar que pertence aos grupos 'dev' e 'op'
+# Teste a regra do sudo
+sudo su - user2
 sudo bash /root/dangerous.sh
 # A saída esperada é "Script perigoso executado com sucesso!"
 ```

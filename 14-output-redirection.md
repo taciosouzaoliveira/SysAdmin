@@ -78,7 +78,8 @@ echo $? > /var/output-generator/4.out
 bash
 
 ```
-# Conte as linhas em cada arquivowc -l /var/output-generator/1.out# ~20342 linhaswc -l /var/output-generator/2.out# ~12336 linhaswc -l /var/output-generator/3.out# ~32678 linhascat /var/output-generator/4.out# Código de saída (ex: 123)
+# Conte as linhas em cada arquivowc -l /var/output-generator/1.out# ~20342 linhaswc -l /var/output-generator/2.out# ~12336 linhaswc -l /var/output-generator/3.out# ~32678 linhas
+cat /var/output-generator/4.out# Código de saída (ex: 123)
 ```
 
 ---

@@ -36,7 +36,8 @@ Anote os PIDs dos processos `collector1`, `collector2` e `collector3`.
 bash
 
 ```
-# Inspecione cada processo (substitua <PID> pelos IDs reais)sudo strace -p <PID_collector1># Nenhuma chamada 'kill'sudo strace -p <PID_collector2># Mostra 'kill' → INFRATORsudo strace -p <PID_collector3># Nenhuma chamada 'kill'
+# Inspecione cada processo (substitua <PID> pelos IDs reais)
+sudo strace -p <PID_collector1># Nenhuma chamada 'kill'sudo strace -p <PID_collector2># Mostra 'kill' → INFRATORsudo strace -p <PID_collector3># Nenhuma chamada 'kill'
 ```
 
 ### **Parte 2: Finalizar o Processo e Remover o Executável**
@@ -44,9 +45,11 @@ bash
 bash
 
 ```
-# Use o PID do collector2 identificadosudo kill <PID_collector2>
+# Use o PID do collector2 identificado
+sudo kill <PID_collector2>
 
-# Remova o executávelsudo rm /bin/collector2
+# Remova o executável
+sudo rm /bin/collector2
 ```
 
 ---
@@ -58,7 +61,8 @@ bash
 ```
 # Procure pelo processo novamenteps aux | grep collector2
 
-# Tente listar o arquivo executávells /bin/collector2# Deve retornar erro
+# Tente listar o arquivo executávells /bin/collector2
+# Deve retornar erro
 ```
 
 ---

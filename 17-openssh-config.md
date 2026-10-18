@@ -66,9 +66,11 @@ Match User cilla
 bash
 
 ```
-# Teste a sintaxesudo sshd -t
+# Teste a sintaxe
+sudo sshd -t
 
-# Reinicie o serviçosudo systemctl restart sshd
+# Reinicie o serviço
+sudo systemctl restart sshd
 ```
 
 ---
@@ -78,11 +80,14 @@ bash
 bash
 
 ```
-# Teste de login com 'marta' (deve mostrar banner e pedir senha)ssh marta@data-002
+# Teste de login com 'marta' (deve mostrar banner e pedir senha)
+ssh marta@data-002
 
-# Teste de login com 'cilla' (deve mostrar banner, mas negar acesso por senha)ssh cilla@data-002
+# Teste de login com 'cilla' (deve mostrar banner, mas negar acesso por senha)
+ssh cilla@data-002
 
-# Teste de login com outro usuário (não deve mostrar banner)ssh root@data-002
+# Teste de login com outro usuário (não deve mostrar banner)
+ssh root@data-002
 ```
 
 ---

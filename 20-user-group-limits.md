@@ -23,7 +23,8 @@ ssh web-srv1
 sudo groupadd operators
 sudo useradd -m jackie
 
-# Adicione configuração temporária (para depois remover)echo 'ulimit -S -u 1024' | sudo tee -a /home/jackie/.bashrc > /dev/null
+# Adicione configuração temporária (para depois remover)
+echo 'ulimit -S -u 1024' | sudo tee -a /home/jackie/.bashrc > /dev/null
 ```
 
 ---
@@ -35,7 +36,8 @@ sudo useradd -m jackie
 bash
 
 ```
-# Remova a configuração temporária do .bashrcsudo nano /home/jackie/.bashrc# Remova a linha 'ulimit -S -u 1024'# Configure limite permanentesudo nano /etc/security/limits.conf
+# Remova a configuração temporária do .bashrc
+sudo nano /home/jackie/.bashrc# Remova a linha 'ulimit -S -u 1024'# Configure limite permanentesudo nano /etc/security/limits.conf
 ```
 
 Adicione a linha:
@@ -63,7 +65,8 @@ text
 bash
 
 ```
-# Teste o limite da jackiesudo su - jackie
+# Teste o limite da jackie
+sudo su - jackie
 ulimit -u# Deve mostrar 1024ulimit -S -u 1100# Deve falhar (não pode modificar hard limit)exit
 ```
 

@@ -64,9 +64,14 @@ cat /etc/timezone > /opt/course/1/timezone
 bash
 
 ```
-# Verifique o conteúdo do arquivo do kernelcat /opt/course/1/kernel
-# Saída esperada (exemplo): 5.15.0-69-generic# Verifique o conteúdo do arquivo ip_forwardcat /opt/course/1/ip_forward
-# Saída esperada (exemplo): 1# Verifique o conteúdo do arquivo de fuso horáriocat /opt/course/1/timezone
+# Verifique o conteúdo do arquivo do kernel
+cat /opt/course/1/kernel
+# Saída esperada (exemplo): 5.15.0-69-generic
+# Verifique o conteúdo do arquivo ip_forward
+cat /opt/course/1/ip_forward
+# Saída esperada (exemplo): 1
+# Verifique o conteúdo do arquivo de fuso horário
+cat /opt/course/1/timezone
 # Saída esperada (exemplo): UTC
 ```
 
@@ -102,17 +107,21 @@ Para esta tarefa, a preparação envolve simular o cenário inicial, criando o u
 bash
 
 ```
-# Crie o usuário 'asset-manager' com um diretório homesudo useradd -m -s /bin/bash asset-manager
+# Crie o usuário 'asset-manager' com um diretório home
+sudo useradd -m -s /bin/bash asset-manager
 
-# Mude para o novo usuário para criar os scripts em seu diretóriosudo su - asset-manager
+# Mude para o novo usuário para criar os scripts em seu diretório
+sudo su - asset-manager
 
-# Crie os scripts de exemploecho '#!/bin/bash' > ~/generate.sh
+# Crie os scripts de exemplo
+echo '#!/bin/bash' > ~/generate.sh
 echo 'echo "Gerando relatorio em $(date)" >> /tmp/report.log' >> ~/generate.sh
 
 echo '#!/bin/bash' > ~/clean.sh
 echo 'echo "Limpando arquivos em $(date)" >> /tmp/clean.log' >> ~/clean.sh
 
-# Torne os scripts executáveischmod +x ~/generate.sh ~/clean.sh
+# Torne os scripts executáveis
+chmod +x ~/generate.sh ~/clean.sh
 
 # Volte para seu usuário normalexit
 ```
@@ -146,11 +155,14 @@ A solução é dividida em duas partes: a migração da tarefa existente e a cri
 bash
 
 ```
-# Inspecione o crontab do sistema para ver a linha a ser migradacat /etc/crontab
+# Inspecione o crontab do sistema para ver a linha a ser migrada
+cat /etc/crontab
 
-# Mude para o usuário asset-manager para editar seu crontab pessoalsudo su - asset-manager
+# Mude para o usuário asset-manager para editar seu crontab pessoal
+sudo su - asset-manager
 
-# Abra o editor de crontab deste usuáriocrontab -e
+# Abra o editor de crontab deste usuário
+crontab -e
 ```
 
 No editor, cole a tarefa, mas remova o campo de usuário (`root`), pois crontabs de usuário não possuem essa coluna.
@@ -168,7 +180,8 @@ bash
 ```
 # Volte para seu usuário com privilégios sudoexit
 
-# Edite o arquivo de sistema para apagar a linha originalsudo nano /etc/crontab
+# Edite o arquivo de sistema para apagar a linha original
+sudo nano /etc/crontab
 ```
 
 ### **Parte 2: Criar a Nova Tarefa Agendada**
@@ -178,7 +191,8 @@ Adicione a segunda tarefa diretamente no crontab do usuário.
 bash
 
 ```
-# Abra o crontab do usuário novamente (pode ser feito diretamente com sudo)sudo crontab -u asset-manager -e
+# Abra o crontab do usuário novamente (pode ser feito diretamente com sudo)
+sudo crontab -u asset-manager -e
 ```
 
 Adicione a nova linha para a tarefa que roda às 11:15 de segunda-feira (1) e quinta-feira (4).
@@ -380,11 +394,14 @@ bash
 #!/bin/bash
 # 1. Define uma variável local, disponível apenas neste scriptVARIABLE2="v2"
 
-# 2. Imprime o conteúdo da variável localecho $VARIABLE2
+# 2. Imprime o conteúdo da variável local
+echo $VARIABLE2
 
-# 3. Define e EXPORTA uma variável, tornando-a disponível para processos filhosexport VARIABLE3="${VARIABLE1}-extended"
+# 3. Define e EXPORTA uma variável, tornando-a disponível para processos filhos
+export VARIABLE3="${VARIABLE1}-extended"
 
-# 4. Imprime o conteúdo da variável exportadaecho $VARIABLE3
+# 4. Imprime o conteúdo da variável exportada
+echo $VARIABLE3
 ```
 
 ---
@@ -438,13 +455,16 @@ bash
 ```
 # Conecte-se ao servidor data-001ssh data-001
 
-# Crie a estrutura de diretórios e arquivos de exemplosudo mkdir -p /imports/source_files/dir1
+# Crie a estrutura de diretórios e arquivos de exemplo
+sudo mkdir -p /imports/source_files/dir1
 sudo touch /imports/source_files/file1.txt
 sudo touch /imports/source_files/dir1/file2.txt
 
-# Crie o arquivo .tar.bz2 inicialsudo tar cjf /imports/import001.tar.bz2 -C /imports/source_files .
+# Crie o arquivo .tar.bz2 inicial
+sudo tar cjf /imports/import001.tar.bz2 -C /imports/source_files .
 
-# Limpe os arquivos de origemsudo rm -rf /imports/source_files
+# Limpe os arquivos de origem
+sudo rm -rf /imports/source_files
 ```
 
 ---
@@ -526,7 +546,8 @@ bash
 ```
 # Conecte-se ao servidor app-srv1ssh app-srv1
 
-# Crie os grupos que serão utilizadossudo groupadd dev
+# Crie os grupos que serão utilizados
+sudo groupadd dev
 sudo groupadd op
 
 # Crie o diretório base para os novos 'homes'sudo mkdir -p /home/accounts
@@ -537,7 +558,8 @@ sudo groupadd op
 bash
 
 ```
-# Crie o usuário 'user1' com uma configuração padrãosudo useradd -m user1
+# Crie o usuário 'user1' com uma configuração padrão
+sudo useradd -m user1
 ```
 
 ### **1.3 Criar o Script para o Teste de Sudo**
@@ -545,10 +567,12 @@ bash
 bash
 
 ```
-# Crie o script de exemploecho '#!/bin/bash' | sudo tee /root/dangerous.sh > /dev/null
+# Crie o script de exemplo
+echo '#!/bin/bash' | sudo tee /root/dangerous.sh > /dev/null
 echo 'echo "Script perigoso executado com sucesso!"' | sudo tee -a /root/dangerous.sh > /dev/null
 
-# Dê permissão de execução ao scriptsudo chmod +x /root/dangerous.sh
+# Dê permissão de execução ao script
+sudo chmod +x /root/dangerous.sh
 ```
 
 ---
@@ -560,7 +584,8 @@ echo 'echo "Script perigoso executado com sucesso!"' | sudo tee -a /root/dangero
 bash
 
 ```
-# -g: muda o grupo primário# -d: muda o diretório homesudo usermod -g dev -d /home/accounts/user1 user1
+# -g: muda o grupo primário# -d: muda o diretório home
+sudo usermod -g dev -d /home/accounts/user1 user1
 ```
 
 ### **Parte 2: Criar o Novo Usuário user2**
@@ -568,7 +593,8 @@ bash
 bash
 
 ```
-# -s: define o shell de login# -m: cria o diretório home# -d: especifica o caminho do diretório home# -G: adiciona o usuário a grupos suplementaressudo useradd -s /bin/bash -m -d /home/accounts/user2 -G dev,op user2
+# -s: define o shell de login# -m: cria o diretório home# -d: especifica o caminho do diretório home# -G: adiciona o usuário a grupos suplementares
+sudo useradd -s /bin/bash -m -d /home/accounts/user2 -G dev,op user2
 ```
 
 ### **Parte 3: Configurar a Permissão Sudo**
@@ -576,7 +602,8 @@ bash
 bash
 
 ```
-# Edite o arquivo sudoers de forma segurasudo visudo
+# Edite o arquivo sudoers de forma segura
+sudo visudo
 ```
 
 Adicione a seguinte linha no final do arquivo:
@@ -600,8 +627,11 @@ bash
 # A saída deve mostrar 'gid=... (dev)'
 
 getent passwd user1 | cut -d: -f6
-# A saída deve ser '/home/accounts/user1'# Verifique as propriedades do user2id user2
-# A saída deve mostrar que pertence aos grupos 'dev' e 'op'# Teste a regra do sudosudo su - user2
+# A saída deve ser '/home/accounts/user1'
+# Verifique as propriedades do user2id user2
+# A saída deve mostrar que pertence aos grupos 'dev' e 'op'
+# Teste a regra do sudo
+sudo su - user2
 sudo bash /root/dangerous.sh
 # A saída esperada é "Script perigoso executado com sucesso!"
 ```
@@ -638,7 +668,8 @@ A tarefa exige a implementação das seguintes regras de firewall na interface 
 bash
 
 ```
-# De um servidor remoto, teste o acesso às portascurl data-002:5000
+# De um servidor remoto, teste o acesso às portas
+curl data-002:5000
 curl data-002:6001
 curl data-002:6002
 ```
@@ -650,7 +681,8 @@ bash
 ```
 # Conecte-se ao servidor data-002ssh data-002
 
-# Liste as regras atuaissudo iptables -L
+# Liste as regras atuais
+sudo iptables -L
 sudo iptables -t nat -L
 ```
 
@@ -679,9 +711,11 @@ sudo iptables -t nat -A PREROUTING -p tcp --dport 6000 -j REDIRECT --to-port 600
 bash
 
 ```
-# Primeiro permita o IP específicosudo iptables -A INPUT -p tcp --dport 6002 -s 192.168.10.80 -j ACCEPT
+# Primeiro permita o IP específico
+sudo iptables -A INPUT -p tcp --dport 6002 -s 192.168.10.80 -j ACCEPT
 
-# Depois bloqueie todo o restosudo iptables -A INPUT -p tcp --dport 6002 -j DROP
+# Depois bloqueie todo o resto
+sudo iptables -A INPUT -p tcp --dport 6002 -j DROP
 ```
 
 ### **Parte 4: Bloquear Tráfego de Saída**
@@ -699,10 +733,12 @@ sudo iptables -A OUTPUT -d 192.168.10.70 -j DROP
 bash
 
 ```
-# Liste as regras aplicadassudo iptables -L
+# Liste as regras aplicadas
+sudo iptables -L
 sudo iptables -t nat -L
 
-# Teste o acesso às portascurl data-002:5000# Deve falharcurl data-002:6000# Deve retornar conteúdo da porta 6001curl data-002:6002# Deve falhar (exceto do data-001)
+# Teste o acesso às portas
+curl data-002:5000# Deve falharcurl data-002:6000# Deve retornar conteúdo da porta 6001curl data-002:6002# Deve falhar (exceto do data-001)
 ```
 
 ---
@@ -744,7 +780,8 @@ bash
 # Lista os dispositivos de bloco
 lsblk -f
 
-# Mostra o uso de espaço em discodf -h
+# Mostra o uso de espaço em disco
+df -h
 ```
 
 ### **1.2 Inspecionar os Processos em Execução**
@@ -766,11 +803,14 @@ bash
 ```
 # Cria sistema de arquivos ext4sudo mkfs.ext4 /dev/vdb
 
-# Cria diretório de montagemsudo mkdir -p /mnt/backup-black
+# Cria diretório de montagem
+sudo mkdir -p /mnt/backup-black
 
-# Monta o discosudo mount /dev/vdb /mnt/backup-black
+# Monta o disco
+sudo mount /dev/vdb /mnt/backup-black
 
-# Cria arquivo de verificaçãosudo touch /mnt/backup-black/completed
+# Cria arquivo de verificação
+sudo touch /mnt/backup-black/completed
 ```
 
 ### **Parte 2: Limpar o Disco Mais Cheio**
@@ -778,9 +818,11 @@ bash
 bash
 
 ```
-# Verifica uso dos discosdf -h | grep /dev/vd[cd]
+# Verifica uso dos discos
+df -h | grep /dev/vd[cd]
 
-# Identifica o ponto de montagem do disco mais cheio# Supondo que seja /mnt/backup001sudo rm -rf /mnt/backup001/.trash/*
+# Identifica o ponto de montagem do disco mais cheio
+# Supondo que seja /mnt/backup001sudo rm -rf /mnt/backup001/.trash/*
 ```
 
 ### **Parte 3: Desmontar o Disco em Uso**
@@ -790,13 +832,17 @@ bash
 ```
 # Identifica o processo com maior consumo de memóriaps aux | grep dark-matter
 
-# Tenta desmontar (deve falhar)sudo umount /mnt/app-4e9d7e1e
+# Tenta desmontar (deve falhar)
+sudo umount /mnt/app-4e9d7e1e
 
-# Identifica processo bloqueadorsudo lsof | grep /mnt/app-4e9d7e1e
+# Identifica processo bloqueador
+sudo lsof | grep /mnt/app-4e9d7e1e
 
-# Finaliza o processosudo kill <PID_do_dark-matter-v2>
+# Finaliza o processo
+sudo kill <PID_do_dark-matter-v2>
 
-# Desmonta o discosudo umount /mnt/app-4e9d7e1e
+# Desmonta o disco
+sudo umount /mnt/app-4e9d7e1e
 ```
 
 ---
@@ -806,11 +852,14 @@ bash
 bash
 
 ```
-# Verifique se o novo disco está montadodf -h | grep /mnt/backup-black
+# Verifique se o novo disco está montado
+df -h | grep /mnt/backup-black
 
-# Verifique se o espaço foi liberadodf -h
+# Verifique se o espaço foi liberado
+df -h
 
-# Verifique se o disco foi desmontadodf -h | grep /mnt/app-4e9d7e1e
+# Verifique se o disco foi desmontado
+df -h | grep /mnt/app-4e9d7e1e
 ```
 
 ---
@@ -848,9 +897,11 @@ bash
 ```
 # Conecte-se ao servidor data-001ssh data-001
 
-# Navegue até o diretório de backupcd /var/backup/backup-015
+# Navegue até o diretório de backup
+cd /var/backup/backup-015
 
-# Crie os subdiretóriossudo mkdir small large compromised
+# Crie os subdiretórios
+sudo mkdir small large compromised
 ```
 
 ### **1.2 Inspecionar o Diretório**
@@ -983,7 +1034,8 @@ sudo sshfs -o allow_other,rw app-srv1:/data-export /app-srv1/data-export
 bash
 
 ```
-# Edite o arquivo de exportssudo nano /etc/exports
+# Edite o arquivo de exports
+sudo nano /etc/exports
 ```
 
 Adicione a linha:
@@ -1066,7 +1118,8 @@ A tarefa exige as seguintes ações:
 bash
 
 ```
-# Lista os contêineres em execuçãosudo docker ps
+# Lista os contêineres em execução
+sudo docker ps
 ```
 
 ### **1.2 Criar o Diretório de Destino**
@@ -1096,7 +1149,8 @@ bash
 ```
 # Extrai o endereço IPsudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' frontend_v2 > /opt/course/11/ip-address
 
-# Extrai o diretório de destino do volumesudo docker inspect -f '{{range .Mounts}}{{.Destination}}{{end}}' frontend_v2 > /opt/course/11/mount-destination
+# Extrai o diretório de destino do volume
+sudo docker inspect -f '{{range .Mounts}}{{.Destination}}{{end}}' frontend_v2 > /opt/course/11/mount-destination
 ```
 
 ### **Parte 3: Iniciar o Novo Contêiner frontend_v3**
@@ -1114,14 +1168,18 @@ sudo docker run -d --name frontend_v3 --memory 30m -p 1234:80 nginx:alpine
 bash
 
 ```
-# Verifique que 'frontend_v1' está paradosudo docker ps -a
+# Verifique que 'frontend_v1' está parado
+sudo docker ps -a
 
-# Verifique o conteúdo dos arquivos de informaçãocat /opt/course/11/ip-address
+# Verifique o conteúdo dos arquivos de informação
+cat /opt/course/11/ip-address
 cat /opt/course/11/mount-destination
 
-# Verifique se o novo contêiner está em execuçãosudo docker ps
+# Verifique se o novo contêiner está em execução
+sudo docker ps
 
-# Teste o acesso à porta mapeadacurl localhost:1234
+# Teste o acesso à porta mapeada
+curl localhost:1234
 ```
 
 ---
@@ -1178,9 +1236,11 @@ cd /home/candidate/repositories/auto-verifier
 bash
 
 ```
-# Liste todas as branchesgit branch -a
+# Liste todas as branches
+git branch -a
 
-# Verifique cada branchgit checkout dev4
+# Verifique cada branch
+git checkout dev4
 grep "user_registration_level" config.yaml# Saída: closedgit checkout dev5
 grep "user_registration_level" config.yaml# Saída: open → ENCONTRAMOS!git checkout dev6
 grep "user_registration_level" config.yaml# Saída: closed# Volte para main e faça o mergegit checkout main
@@ -1212,11 +1272,14 @@ git commit -m "added log directory"
 bash
 
 ```
-# Verifique se a alteração do merge está presentegrep "user_registration_level" config.yaml
+# Verifique se a alteração do merge está present
+egrep "user_registration_level" config.yaml
 
-# Verifique o status do gitgit status
+# Verifique o status do git
+git status
 
-# Verifique o histórico de commitsgit log -1
+# Verifique o histórico de commits
+git log -1
 ```
 
 ---
@@ -1268,7 +1331,8 @@ Anote os PIDs dos processos `collector1`, `collector2` e `collector3`.
 bash
 
 ```
-# Inspecione cada processo (substitua <PID> pelos IDs reais)sudo strace -p <PID_collector1># Nenhuma chamada 'kill'sudo strace -p <PID_collector2># Mostra 'kill' → INFRATORsudo strace -p <PID_collector3># Nenhuma chamada 'kill'
+# Inspecione cada processo (substitua <PID> pelos IDs reais)
+sudo strace -p <PID_collector1># Nenhuma chamada 'kill'sudo strace -p <PID_collector2># Mostra 'kill' → INFRATORsudo strace -p <PID_collector3># Nenhuma chamada 'kill'
 ```
 
 ### **Parte 2: Finalizar o Processo e Remover o Executável**
@@ -1276,9 +1340,11 @@ bash
 bash
 
 ```
-# Use o PID do collector2 identificadosudo kill <PID_collector2>
+# Use o PID do collector2 identificado
+sudo kill <PID_collector2>
 
-# Remova o executávelsudo rm /bin/collector2
+# Remova o executável
+sudo rm /bin/collector2
 ```
 
 ---
@@ -1290,7 +1356,8 @@ bash
 ```
 # Procure pelo processo novamenteps aux | grep collector2
 
-# Tente listar o arquivo executávells /bin/collector2# Deve retornar erro
+# Tente listar o arquivo executávells /bin/collector2
+# Deve retornar erro
 ```
 
 ---
@@ -1383,7 +1450,8 @@ echo $? > /var/output-generator/4.out
 bash
 
 ```
-# Conte as linhas em cada arquivowc -l /var/output-generator/1.out# ~20342 linhaswc -l /var/output-generator/2.out# ~12336 linhaswc -l /var/output-generator/3.out# ~32678 linhascat /var/output-generator/4.out# Código de saída (ex: 123)
+# Conte as linhas em cada arquivowc -l /var/output-generator/1.out# ~20342 linhaswc -l /var/output-generator/2.out# ~12336 linhaswc -l /var/output-generator/3.out# ~32678 linhas
+cat /var/output-generator/4.out# Código de saída (ex: 123)
 ```
 
 ---
@@ -1507,7 +1575,8 @@ bash
 ```
 # Conecte-se ao servidor web-srv1ssh web-srv1
 
-# Teste o acesso às aplicaçõescurl localhost:1111# Saída: app1curl localhost:2222# Saída: app2curl localhost:2222/special# Saída: app2 special
+# Teste o acesso às aplicações
+curl localhost:1111# Saída: app1curl localhost:2222# Saída: app2curl localhost:2222/special# Saída: app2 special
 ```
 
 ---
@@ -1519,7 +1588,8 @@ bash
 bash
 
 ```
-# Crie um novo arquivo de configuraçãosudo nano /etc/nginx/sites-available/load-balancer.conf
+# Crie um novo arquivo de configuração
+sudo nano /etc/nginx/sites-available/load-balancer.conf
 ```
 
 Adicione o seguinte conteúdo:
@@ -1554,11 +1624,14 @@ nginx
 bash
 
 ```
-# Crie link simbólico para sites-enabledsudo ln -s /etc/nginx/sites-available/load-balancer.conf /etc/nginx/sites-enabled/
+# Crie link simbólico para sites-enabled
+sudo ln -s /etc/nginx/sites-available/load-balancer.conf /etc/nginx/sites-enabled/
 
-# Teste a sintaxesudo nginx -t
+# Teste a sintaxe
+sudo nginx -t
 
-# Recarregue o serviçosudo systemctl reload nginx
+# Recarregue o serviço
+sudo systemctl reload nginx
 ```
 
 ---
@@ -1568,11 +1641,13 @@ bash
 bash
 
 ```
-# Teste o balanceamento (deve alternar entre app1 e app2)curl http://web-srv1:8000
+# Teste o balanceamento (deve alternar entre app1 e app2)
+curl http://web-srv1:8000
 curl http://web-srv1:8000
 curl http://web-srv1:8000
 
-# Teste o redirecionamento (sempre app2 special)curl http://web-srv1:8001
+# Teste o redirecionamento (sempre app2 special)
+curl http://web-srv1:8001
 curl http://web-srv1:8001/qualquer/caminho
 ```
 
@@ -1654,9 +1729,11 @@ Match User cilla
 bash
 
 ```
-# Teste a sintaxesudo sshd -t
+# Teste a sintaxe
+sudo sshd -t
 
-# Reinicie o serviçosudo systemctl restart sshd
+# Reinicie o serviço
+sudo systemctl restart sshd
 ```
 
 ---
@@ -1666,11 +1743,14 @@ bash
 bash
 
 ```
-# Teste de login com 'marta' (deve mostrar banner e pedir senha)ssh marta@data-002
+# Teste de login com 'marta' (deve mostrar banner e pedir senha)
+ssh marta@data-002
 
-# Teste de login com 'cilla' (deve mostrar banner, mas negar acesso por senha)ssh cilla@data-002
+# Teste de login com 'cilla' (deve mostrar banner, mas negar acesso por senha)
+ssh cilla@data-002
 
-# Teste de login com outro usuário (não deve mostrar banner)ssh root@data-002
+# Teste de login com outro usuário (não deve mostrar banner)
+ssh root@data-002
 ```
 
 ---
@@ -1708,11 +1788,14 @@ A tarefa exige as seguintes ações de gerenciamento de LVM:
 bash
 
 ```
-# Liste os Physical Volumessudo pvs
+# Liste os Physical Volumes
+sudo pvs
 
-# Liste os Volume Groupssudo vgs
+# Liste os Volume Groups
+sudo vgs
 
-# Liste os Logical Volumessudo lvs
+# Liste os Logical Volumes
+sudo lvs
 ```
 
 ---
@@ -1760,11 +1843,14 @@ bash
 ```
 # Verifique se /dev/vdh pertence a 'vol2'sudo pvs
 
-# Verifique se os VGs foram configurados corretamentesudo vgs
+# Verifique se os VGs foram configurados corretamente
+sudo vgs
 
-# Verifique se o novo LV existesudo lvs
+# Verifique se o novo LV existe
+sudo lvs
 
-# Verifique o sistema de arquivossudo blkid /dev/vol2/p1
+# Verifique o sistema de arquivos
+sudo blkid /dev/vol2/p1
 ```
 
 ---
@@ -1826,9 +1912,11 @@ grep -E "/app/user.*hacker-bot/1.2" nginx.log > nginx.log.extracted
 bash
 
 ```
-# Faça backup primeirocp server.log server.log.bak
+# Faça backup primeiro
+cp server.log server.log.bak
 
-# Substitua as linhas sensíveissed -i 's/^container\.web.*Running.*24h$/SENSITIVE LINE REMOVED/g' server.log
+# Substitua as linhas sensíveis
+sed -i 's/^container\.web.*Running.*24h$/SENSITIVE LINE REMOVED/g' server.log
 ```
 
 ---
@@ -1838,7 +1926,10 @@ bash
 bash
 
 ```
-# Verifique a extraçãowc -l nginx.log.extracted# Deve ser 27 linhas# Verifique a substituiçãogrep "SENSITIVE LINE REMOVED" server.log | wc -l# Deve ser 44 linhas
+# Verifique a extraçãowc -l nginx.log.extracted
+# Deve ser 27 linhas
+# Verifique a substituição
+grep "SENSITIVE LINE REMOVED" server.log | wc -l# Deve ser 44 linhas
 ```
 
 ---
@@ -1879,7 +1970,8 @@ ssh web-srv1
 sudo groupadd operators
 sudo useradd -m jackie
 
-# Adicione configuração temporária (para depois remover)echo 'ulimit -S -u 1024' | sudo tee -a /home/jackie/.bashrc > /dev/null
+# Adicione configuração temporária (para depois remover)
+echo 'ulimit -S -u 1024' | sudo tee -a /home/jackie/.bashrc > /dev/null
 ```
 
 ---
@@ -1891,7 +1983,8 @@ sudo useradd -m jackie
 bash
 
 ```
-# Remova a configuração temporária do .bashrcsudo nano /home/jackie/.bashrc# Remova a linha 'ulimit -S -u 1024'# Configure limite permanentesudo nano /etc/security/limits.conf
+# Remova a configuração temporária do .bashrc
+sudo nano /home/jackie/.bashrc# Remova a linha 'ulimit -S -u 1024'# Configure limite permanentesudo nano /etc/security/limits.conf
 ```
 
 Adicione a linha:
@@ -1919,7 +2012,8 @@ text
 bash
 
 ```
-# Teste o limite da jackiesudo su - jackie
+# Teste o limite da jackie
+sudo su - jackie
 ulimit -u# Deve mostrar 1024ulimit -S -u 1100# Deve falhar (não pode modificar hard limit)exit
 ```
 

@@ -27,7 +27,8 @@ A tarefa exige as seguintes ações:
 bash
 
 ```
-# Lista os contêineres em execuçãosudo docker ps
+# Lista os contêineres em execução
+sudo docker ps
 ```
 
 ### **1.2 Criar o Diretório de Destino**
@@ -57,7 +58,8 @@ bash
 ```
 # Extrai o endereço IPsudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' frontend_v2 > /opt/course/11/ip-address
 
-# Extrai o diretório de destino do volumesudo docker inspect -f '{{range .Mounts}}{{.Destination}}{{end}}' frontend_v2 > /opt/course/11/mount-destination
+# Extrai o diretório de destino do volume
+sudo docker inspect -f '{{range .Mounts}}{{.Destination}}{{end}}' frontend_v2 > /opt/course/11/mount-destination
 ```
 
 ### **Parte 3: Iniciar o Novo Contêiner frontend_v3**
@@ -75,14 +77,18 @@ sudo docker run -d --name frontend_v3 --memory 30m -p 1234:80 nginx:alpine
 bash
 
 ```
-# Verifique que 'frontend_v1' está paradosudo docker ps -a
+# Verifique que 'frontend_v1' está parado
+sudo docker ps -a
 
-# Verifique o conteúdo dos arquivos de informaçãocat /opt/course/11/ip-address
+# Verifique o conteúdo dos arquivos de informação
+cat /opt/course/11/ip-address
 cat /opt/course/11/mount-destination
 
-# Verifique se o novo contêiner está em execuçãosudo docker ps
+# Verifique se o novo contêiner está em execução
+sudo docker ps
 
-# Teste o acesso à porta mapeadacurl localhost:1234
+# Teste o acesso à porta mapeada
+curl localhost:1234
 ```
 
 ---

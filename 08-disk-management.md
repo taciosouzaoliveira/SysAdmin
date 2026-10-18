@@ -24,7 +24,8 @@ bash
 # Lista os dispositivos de bloco
 lsblk -f
 
-# Mostra o uso de espaço em discodf -h
+# Mostra o uso de espaço em disco
+df -h
 ```
 
 ### **1.2 Inspecionar os Processos em Execução**
@@ -46,11 +47,14 @@ bash
 ```
 # Cria sistema de arquivos ext4sudo mkfs.ext4 /dev/vdb
 
-# Cria diretório de montagemsudo mkdir -p /mnt/backup-black
+# Cria diretório de montagem
+sudo mkdir -p /mnt/backup-black
 
-# Monta o discosudo mount /dev/vdb /mnt/backup-black
+# Monta o disco
+sudo mount /dev/vdb /mnt/backup-black
 
-# Cria arquivo de verificaçãosudo touch /mnt/backup-black/completed
+# Cria arquivo de verificação
+sudo touch /mnt/backup-black/completed
 ```
 
 ### **Parte 2: Limpar o Disco Mais Cheio**
@@ -58,9 +62,11 @@ bash
 bash
 
 ```
-# Verifica uso dos discosdf -h | grep /dev/vd[cd]
+# Verifica uso dos discos
+df -h | grep /dev/vd[cd]
 
-# Identifica o ponto de montagem do disco mais cheio# Supondo que seja /mnt/backup001sudo rm -rf /mnt/backup001/.trash/*
+# Identifica o ponto de montagem do disco mais cheio
+# Supondo que seja /mnt/backup001sudo rm -rf /mnt/backup001/.trash/*
 ```
 
 ### **Parte 3: Desmontar o Disco em Uso**
@@ -70,13 +76,17 @@ bash
 ```
 # Identifica o processo com maior consumo de memóriaps aux | grep dark-matter
 
-# Tenta desmontar (deve falhar)sudo umount /mnt/app-4e9d7e1e
+# Tenta desmontar (deve falhar)
+sudo umount /mnt/app-4e9d7e1e
 
-# Identifica processo bloqueadorsudo lsof | grep /mnt/app-4e9d7e1e
+# Identifica processo bloqueador
+sudo lsof | grep /mnt/app-4e9d7e1e
 
-# Finaliza o processosudo kill <PID_do_dark-matter-v2>
+# Finaliza o processo
+sudo kill <PID_do_dark-matter-v2>
 
-# Desmonta o discosudo umount /mnt/app-4e9d7e1e
+# Desmonta o disco
+sudo umount /mnt/app-4e9d7e1e
 ```
 
 ---
@@ -86,11 +96,14 @@ bash
 bash
 
 ```
-# Verifique se o novo disco está montadodf -h | grep /mnt/backup-black
+# Verifique se o novo disco está montado
+df -h | grep /mnt/backup-black
 
-# Verifique se o espaço foi liberadodf -h
+# Verifique se o espaço foi liberado
+df -h
 
-# Verifique se o disco foi desmontadodf -h | grep /mnt/app-4e9d7e1e
+# Verifique se o disco foi desmontado
+df -h | grep /mnt/app-4e9d7e1e
 ```
 
 ---

@@ -64,9 +64,14 @@ cat /etc/timezone > /opt/course/1/timezone
 bash
 
 ```
-# Verifique o conteúdo do arquivo do kernelcat /opt/course/1/kernel
-# Saída esperada (exemplo): 5.15.0-69-generic# Verifique o conteúdo do arquivo ip_forwardcat /opt/course/1/ip_forward
-# Saída esperada (exemplo): 1# Verifique o conteúdo do arquivo de fuso horáriocat /opt/course/1/timezone
+# Verifique o conteúdo do arquivo do kernel
+cat /opt/course/1/kernel
+# Saída esperada (exemplo): 5.15.0-69-generic
+# Verifique o conteúdo do arquivo ip_forward
+cat /opt/course/1/ip_forward
+# Saída esperada (exemplo): 1
+# Verifique o conteúdo do arquivo de fuso horário
+cat /opt/course/1/timezone
 # Saída esperada (exemplo): UTC
 ```
 
